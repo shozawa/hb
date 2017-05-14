@@ -1,8 +1,6 @@
 # Hb
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hb`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Simple Hash Builder which has ActiveModelSerializers like interface.
 
 ## Installation
 
@@ -22,13 +20,41 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Creating Presenter
+Subclass Hb::Base and declare attributes.
 
-## Development
+```ruby
+class PersonPresenter < Hb::Base
+  attributes :id, :email
+  attribute :last_name, key: :family_name
+end
+```
+The attributes names are whitelist of attributes to be exposed. You can change key name by using :key option.
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### Buildeing Hash
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+Person = Struct.new(:id, :email, :last_name, :first_name, :age)
+
+shozawa = Person.new(1, 'shozawa@sample.com', 'shozawa', 'tomohiro', 28)
+
+PersonPresenter.new(shozawa).to_h
+
+# => { id: 1, email: 'shozawa@sample.com', family_name: 'shozawa' }
+```
+
+### Using method
+```ruby
+class PersonPresenter < Hb::Base
+  attributes :id, :email, :full_name
+  def full_name
+    "#{object.first_name} #{object.last_name}"
+  end
+end
+
+# => { id: 1, email: 'shozawa@sample.com', full_name: 'tomohiro shozawa' }
+```
+
 
 ## Contributing
 
