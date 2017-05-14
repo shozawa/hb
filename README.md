@@ -36,11 +36,14 @@ The attributes names are whitelist of attributes to be exposed. You can change k
 ```ruby
 Person = Struct.new(:id, :email, :last_name, :first_name, :age)
 
-shozawa = Person.new(1, 'shozawa@sample.com', 'shozawa', 'tomohiro', 28)
+person = Person.new(1, 'shozawa@sample.com', 'shozawa', 'tomohiro', 28)
 
-PersonPresenter.new(shozawa).to_h
+PersonPresenter.new(person).to_h
 
 # => { id: 1, email: 'shozawa@sample.com', family_name: 'shozawa' }
+
+# you can pass ActiveModel object like this
+PersonPresenter.new(User.find(1)).to_h
 ```
 
 ### Using method
@@ -55,6 +58,24 @@ end
 # => { id: 1, email: 'shozawa@sample.com', full_name: 'tomohiro shozawa' }
 ```
 
+### Transforming Keys
+```ruby
+# pass method_name
+Hb::Base.key_format :upcase
+PersonPresenter.new(person).to_h
+# => { "ID" => 1, "EMAIL" => 'shozawa@sample.com', "FULL_NAME": ... }
+
+# with options
+Hb::Base.key_format camelize: :lower
+PersonPresenter.new(person).to_h
+# => { "id" => 1, "email" => 'shozawa@sample.com', "fullName": ... }
+
+# you can pass proc
+Hb::Base.key_format -> (k) { '_' + k }
+PersonPresenter.new(person).to_h
+# => { "_id" => 1, "_email" => 'shozawa@sample.com', "_full_name": ... }
+
+```
 
 ## Contributing
 
