@@ -81,5 +81,5 @@ PersonPresenter.new(person).to_h
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/hb.
+Bug reports and pull requests are welcome on GitHub at https://github.com/shozawa/hb.
 
