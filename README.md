@@ -46,7 +46,7 @@ PersonPresenter.new(person).to_h
 PersonPresenter.new(User.find(1)).to_h
 ```
 
-### Using method
+### Computed Attributes
 ```ruby
 class PersonPresenter < Hb::Base
   attributes :id, :email, :full_name
@@ -57,6 +57,8 @@ end
 
 # => { id: 1, email: 'shozawa@sample.com', full_name: 'tomohiro shozawa' }
 ```
+
+`object` is the object to be wrapped.
 
 ### Transforming Keys
 ```ruby
