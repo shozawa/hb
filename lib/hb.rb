@@ -31,6 +31,14 @@ module Hb
       def key_format(*args)
         self.key_formatter = KeyFormatter.new(*args)
       end
+
+      def wrap(object)
+        new(object).to_h
+      end
+
+      def collection(objects)
+        objects.map { |o| wrap(o) }
+      end
     end
 
     def to_hash
