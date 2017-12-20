@@ -31,7 +31,7 @@ end
 ```
 The attributes names are whitelist of attributes to be exposed. You can change key name by using :key option.
 
-### Buildeing Hash
+### Building Hash
 
 ```ruby
 Person = Struct.new(:id, :email, :last_name, :first_name, :age)
@@ -44,6 +44,21 @@ PersonPresenter.new(person).to_h
 
 # you can pass ActiveModel object like this
 PersonPresenter.new(User.find(1)).to_h
+
+# and you can use factory method
+PersonPresenter.wrap(person)
+```
+
+### Building Collection 
+
+```ruby
+people = [
+  Person.new(1, 'nobunaga', 'oda', 30),
+  Person.new(2, 'ieyasu', 'tokugawa', 50),
+]
+
+# factory method for collection
+PersonPresenter.collection(people)
 ```
 
 ### Computed Attributes
